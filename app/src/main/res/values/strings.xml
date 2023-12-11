@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SprintSphere Pro</string>
+    <string name="location_perm_off">Denied</string>
+    <string name="ask_for_background_text">We need to track your location in the background to calculate the distance, speed and the calories your have burned, so we ask you to set location access in settings to \'Allow all the time\'</string>
+    <string name="normal_location_text">We need your precise location to display your location on the map and let you view where have you been</string>
 </resources>

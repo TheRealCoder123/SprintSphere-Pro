@@ -96,8 +96,8 @@ fun SprintSphereProTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = VioletLight.toArgb()
-            window.navigationBarColor = VioletLight.toArgb()
+            window.statusBarColor = if (isDarkTheme) Black.toArgb() else VioletLight.toArgb()
+            window.navigationBarColor = if (isDarkTheme) Black.toArgb() else VioletLight.toArgb()
         }
     }
 

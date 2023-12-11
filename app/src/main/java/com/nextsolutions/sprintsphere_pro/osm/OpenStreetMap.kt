@@ -1,6 +1,9 @@
 package com.utsman.osmandcompose
 
 import android.content.Context
+import android.content.om.OverlayIdentifier
+import android.graphics.drawable.Drawable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.LayoutScopeMarker
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Composition
@@ -9,6 +12,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.runtime.rememberUpdatedState
@@ -16,8 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.nextsolutions.sprintsphere_pro.R
 import kotlinx.coroutines.awaitCancellation
 import org.osmdroid.events.MapListener
 import org.osmdroid.tileprovider.MapTileProviderBasic
@@ -28,6 +34,8 @@ import org.osmdroid.util.MapTileIndex
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.TilesOverlay
+import org.osmdroid.views.overlay.mylocation.DirectedLocationOverlay
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 internal typealias OsmMapView = MapView
 
@@ -92,7 +100,7 @@ fun OpenStreetMap(
     properties: MapProperties = DefaultMapProperties,
     onMapClick: (GeoPoint) -> Unit = {},
     onMapLongClick: (GeoPoint) -> Unit = {},
-    onFirstLoadListener: () -> Unit = {},
+    onFirstLoadListener: (MapView) -> Unit = {},
     content: (@Composable @OsmAndroidComposable OsmAndroidScope.() -> Unit)? = null
 ) {
 
@@ -104,14 +112,17 @@ fun OpenStreetMap(
         it.onMapClick = onMapClick
         it.onMapLongClick = onMapLongClick
         it.onFirstLoadListener = {
-            onFirstLoadListener.invoke()
+            onFirstLoadListener.invoke(mapView)
         }
     }
 
     val mapProperties by rememberUpdatedState(properties)
+    val isDarkMode = isSystemInDarkTheme()
 
     val parentComposition = rememberCompositionContext()
     val currentContent by rememberUpdatedState(content)
+
+
 
     LaunchedEffect(Unit) {
         disposingComposition {
@@ -125,15 +136,10 @@ fun OpenStreetMap(
     AndroidView(
         modifier = modifier,
         factory = {
+            mapView.overlayManager.tilesOverlay.setColorFilter(if (isDarkMode) TilesOverlay.INVERT_COLORS else null)
             mapView
         },
-        update = {
-            it.controller.animateTo(
-                cameraState.geoPoint,
-                cameraState.zoom,
-                cameraState.speed
-            )
-        }
+        update = {}
     )
 }
 

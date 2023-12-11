@@ -14,8 +14,6 @@ import com.nextsolutions.sprintsphere_pro.di.HiltModule
 import com.nextsolutions.sprintsphere_pro.presentation.app.Application
 import com.nextsolutions.sprintsphere_pro.presentation.app.MainActivity
 import com.nextsolutions.sprintsphere_pro.presentation.app.NavGraph
-import com.nextsolutions.sprintsphere_pro.presentation.home_screen.HomeScreen
-import com.nextsolutions.sprintsphere_pro.presentation.settings_screen.SettingsScreen
 import com.nextsolutions.sprintsphere_pro.presentation.setup_screen.SetupScreen
 import com.nextsolutions.sprintsphere_pro.presentation.theme.SprintSphereProTheme
 import com.nextsolutions.sprintsphere_pro.testing.SetupScreenTestTags
@@ -39,9 +37,11 @@ class SetupScreenTest {
     val composeRule = createAndroidComposeRule<MainActivity>()
 
 
+
     @OptIn(ExperimentalAnimationApi::class)
     @Before
     fun setup() {
+
 
         hiltRule.inject()
         composeRule.activity.setContent {
@@ -54,7 +54,9 @@ class SetupScreenTest {
                 composable(NavGraph.SetupScreen.route){
                     SetupScreen(navHostController)
                 }
-                composable(NavGraph.HomeScreen.route){}
+                composable(NavGraph.HomeScreen.route){
+
+                }
             }
         }
         composeRule.waitForIdle()

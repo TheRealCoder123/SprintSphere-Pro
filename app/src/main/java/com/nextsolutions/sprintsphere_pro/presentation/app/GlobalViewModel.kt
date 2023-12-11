@@ -16,6 +16,7 @@ import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.osmdroid.util.GeoPoint
 import javax.inject.Inject
 
 @HiltViewModel

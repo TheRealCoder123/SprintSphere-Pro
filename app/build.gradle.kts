@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.nextsolutions.sprintsphere_pro"
-        minSdk = 24
+        minSdk = 27
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -168,8 +168,10 @@ dependencies {
 
     implementation("org.osmdroid:osmdroid-android:6.1.16")
 
-    implementation("com.google.accompanist:accompanist-permissions:0.24.13-rc"
-    )
+    implementation("com.google.accompanist:accompanist-permissions:0.24.13-rc")
+
+    // Location Services
+    implementation("com.google.android.gms:play-services-location:20.0.0")
 
 
 }
